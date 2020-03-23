@@ -1,0 +1,51 @@
+#define LED_PIN_0 8
+#define LED_PIN_1 9
+#define LED_PIN_2 10
+#define INT_PIN   3
+int timer1_counter;
+int toggle=0;
+int one=0;
+int time=0;
+void setup()
+{ Serial.begin(9600);
+  pinMode(LED_PIN_0, OUTPUT);
+  pinMode(LED_PIN_1, OUTPUT);
+  pinMode(INT_PIN, INPUT);
+  /*noInterrupts();
+  TCCR1A= 0;
+  TCCR1B= 0;
+  timer1_counter =1;
+  TCNT1 =timer1_counter;
+  TCCR1B |= (1<<CS12);
+  TIMSK1 |= (1<<TOIE1);
+  interrupts();*/
+  attachInterrupt(digitalPinToInterrupt(INT_PIN),IDK,RISING);
+}
+
+void loop()
+{
+  digitalWrite(LED_PIN_0, HIGH);
+  delay(time); // Wait for 1000 millisecond(s)
+  digitalWrite(LED_PIN_0, LOW);
+  delay(time); // Wait for 1000 millisecond(s)
+
+}
+void IDK() {
+  if(one==0){
+  time=1000;
+  one++;
+  }
+  else if(one==1){
+  time=2000;
+  one++;
+  }
+  else if(one==2){
+  time=3000;
+  one=0;
+  }  
+}
+/*ISR (TIMER1_OVF_vect){
+  TCNT1 =timer1_counter;
+  digitalWrite(LED_PIN_1, toggle);
+  toggle = !toggle;
+}*/
